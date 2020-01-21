@@ -1,24 +1,35 @@
-import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
-import './App.css';
-import { connect } from 'react-redux';
+import React from "react";
+import { Grid } from "semantic-ui-react";
+import "./App.css";
+import { connect } from "react-redux";
 
-import ColorPanel from './ColorPanel/ColorPanel';
-import SidePanel from './SidePanel/SidePanel';
-import Messages from './Messages/Messages';
-import MetaPanel from './MetaPanel/MetaPanel';
+import ColorPanel from "./ColorPanel/ColorPanel";
+import SidePanel from "./SidePanel/SidePanel";
+import Messages from "./Messages/Messages";
+import MetaPanel from "./MetaPanel/MetaPanel";
 
-const App = ({ currentUser, currentChannel, isPrivateChannel, userPost, primaryColor, secondaryColor }) => (
-  <Grid columns="equal" className="app" style={{ background: secondaryColor.hex }}>
+const App = ({
+  currentUser,
+  currentChannel,
+  isPrivateChannel,
+  userPost,
+  primaryColor,
+  secondaryColor
+}) => (
+  <Grid
+    columns="equal"
+    className="app"
+    style={{ background: secondaryColor.hex }}
+  >
     <ColorPanel
       key={currentUser && currentUser.name}
-      currentUser={currentUser} 
+      currentUser={currentUser}
     />
-      <SidePanel
-        key={currentUser && currentUser.uid}
-        currentUser={currentUser}
-        primaryColor={primaryColor}
-      />
+    <SidePanel
+      key={currentUser && currentUser.uid}
+      currentUser={currentUser}
+      primaryColor={primaryColor}
+    />
     <Grid.Column style={{ marginLeft: 320 }}>
       <Messages
         key={currentChannel && currentChannel.id}
@@ -29,14 +40,13 @@ const App = ({ currentUser, currentChannel, isPrivateChannel, userPost, primaryC
     </Grid.Column>
 
     <Grid.Column width={4}>
-      <MetaPanel 
+      <MetaPanel
         key={currentChannel && currentChannel.name}
         userPost={userPost}
         currentChannel={currentChannel}
-        isPrivateChannel={isPrivateChannel} 
+        isPrivateChannel={isPrivateChannel}
       />
     </Grid.Column>
-    
   </Grid>
 );
 
@@ -47,6 +57,6 @@ const mapStateToProps = state => ({
   userPost: state.channel.userPosts,
   primaryColor: state.colors.primary,
   secondaryColor: state.colors.secondary
-})
- 
+});
+
 export default connect(mapStateToProps)(App);
